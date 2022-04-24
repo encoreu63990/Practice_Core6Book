@@ -7,7 +7,11 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+//app.Map("/map1", Map1);
+//app.Map("/map2", Map2);
+
 //app.UseCustom();
+
 // move into CustomMiddleware
 //app.Use(async (context, next) =>
 //{
@@ -41,3 +45,19 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+//static void Map1(IApplicationBuilder app)
+//{
+//    app.Run(async (context) =>
+//    {
+//        await context.Response.WriteAsync("Map 1");
+//    });
+//}
+
+//static void Map2(IApplicationBuilder app)
+//{
+//    app.Run(async (context) =>
+//    {
+//        await context.Response.WriteAsync("Map 2");
+//    });
+//}
