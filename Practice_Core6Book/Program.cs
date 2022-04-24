@@ -5,9 +5,17 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-app.Run(async context => {
-    await context.Response.WriteAsync("app.Run");
-});
+//app.Use(async (context, next) =>
+//{
+//    await context.Response.WriteAsync("app.Use start\r\n");
+//    await next.Invoke();
+//    await context.Response.WriteAsync("\r\napp.Use end");
+//});
+
+//app.Run(async context =>
+//{
+//    await context.Response.WriteAsync("app.Run");
+//});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
