@@ -1,3 +1,5 @@
+using Practice_Core6Book.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +7,8 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+//app.UseCustom();
+// move into CustomMiddleware
 //app.Use(async (context, next) =>
 //{
 //    await context.Response.WriteAsync("app.Use start\r\n");
