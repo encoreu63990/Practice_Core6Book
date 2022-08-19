@@ -10,15 +10,18 @@ var app = builder.Build();
 //app.Map("/map1", Map1);
 //app.Map("/map2", Map2);
 
-//app.UseCustom();
 
-// move into CustomMiddleware
+
+// Use
 //app.Use(async (context, next) =>
 //{
 //    await context.Response.WriteAsync("app.Use start\r\n");
 //    await next.Invoke();
 //    await context.Response.WriteAsync("\r\napp.Use end");
 //});
+
+// Use 整進程式檔
+//app.UseCustom();
 
 //app.Run(async context =>
 //{
