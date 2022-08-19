@@ -7,8 +7,23 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-//app.Map("/map1", Map1);
-//app.Map("/map2", Map2);
+app.Map("/map", mapApp =>
+{
+    mapApp.Run(async context =>
+    {
+        await context.Response.WriteAsync("map. \r\n");
+    });
+});
+app.Map("/v1", v1 =>
+{
+    v1.Map("/map", mapApp =>
+    {
+        mapApp.Run(async context =>
+        {
+            await context.Response.WriteAsync("v1 map. \r\n");
+        });
+    });
+});
 
 
 
