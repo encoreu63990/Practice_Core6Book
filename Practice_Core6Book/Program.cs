@@ -1,9 +1,18 @@
 using Practice_Core6Book.Middlewares;
+using Serilog;
+
+
+Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

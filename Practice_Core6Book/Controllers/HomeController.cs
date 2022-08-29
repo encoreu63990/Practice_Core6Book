@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Practice_Core6Book.Models;
+using Serilog;
 using System.Diagnostics;
 
 namespace Practice_Core6Book.Controllers
@@ -15,7 +16,21 @@ namespace Practice_Core6Book.Controllers
 
         public IActionResult Index()
         {
+
+
+            Log.Verbose("Verbose");
+            Log.Debug("Debug");
+            Log.Information("Information");
+            Log.Warning("Warning");
+            Log.Error("Error");
+            Log.Fatal("Fatal");
             return View();
+        }
+
+        public IActionResult Get()
+        {
+            int[] arr = new int[] { 1, 2, 3, 4, 5 };
+            return Json(arr);
         }
 
         public IActionResult Privacy()
