@@ -1,13 +1,19 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Practice_Core6Book.Middlewares;
 using Serilog;
 
 
 Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:5341")
                 .CreateLogger();
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
+    options.LoginPath = new PathString("/Home/Login");
+    options.LogoutPath = new PathString("/Home/Logout");
+});
 
 
 // Add services to the container.
@@ -65,6 +71,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
