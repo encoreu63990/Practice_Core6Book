@@ -15,6 +15,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LogoutPath = new PathString("/Home/Logout");
 });
 
+// docker run --name my-redis -p 6379:6379 -d redis
+builder.Services.AddDistributedRedisCache(options => {
+    options.Configuration = "localhost:6379";
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
