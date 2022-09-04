@@ -10,21 +10,42 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
     options.LoginPath = new PathString("/Home/Login");
     options.LogoutPath = new PathString("/Home/Logout");
 });
 
 // docker run --name my-redis -p 6379:6379 -d redis
-builder.Services.AddDistributedRedisCache(options => {
+builder.Services.AddDistributedRedisCache(options =>
+{
     options.Configuration = "localhost:6379";
 });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Host.UseSerilog();
+builder.Services.AddResponseCaching(options =>
+{
+    options.MaximumBodySize = 1024;
+});
 
 var app = builder.Build();
+app.UseResponseCaching();
+
+app.Use(async (context, next) =>
+{
+    context.Response.GetTypedHeaders().CacheControl =
+        new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+        {
+            Public = true,
+            MaxAge = TimeSpan.FromSeconds(10)
+        };
+    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+        new string[] { "Accept-Encoding" };
+
+    await next();
+});
 
 app.Map("/map", mapApp =>
 {
@@ -43,7 +64,6 @@ app.Map("/v1", v1 =>
         });
     });
 });
-
 
 
 // Use

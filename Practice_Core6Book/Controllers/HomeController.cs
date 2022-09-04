@@ -32,10 +32,13 @@ namespace Practice_Core6Book.Controllers
             return View();
         }
 
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         public IActionResult Get()
         {
-            int[] arr = new int[] { 1, 2, 3, 4, 5 };
-            return Json(arr);
+            return Json(new
+            {
+                now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff")
+            }); ;
         }
 
         public IActionResult Login()
