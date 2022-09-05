@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Practice_Core6Book.Hubs;
 using Practice_Core6Book.Middlewares;
 using Serilog;
 
@@ -29,6 +30,7 @@ builder.Services.AddResponseCaching(options =>
 {
     options.MaximumBodySize = 1024;
 });
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 app.UseResponseCaching();
@@ -98,6 +100,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<ChatHub>("/chatHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
